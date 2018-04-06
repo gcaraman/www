@@ -1,5 +1,6 @@
 # www
-This repository stores the code and data for www.404.md
+
+This repository stores the code and data for [www.404.md][1]
 
 ## Back-end maintenance
 
@@ -9,49 +10,53 @@ This repository stores the code and data for www.404.md
 
 Checks user input data and sends email if there is no invalid data.
 
-* Protected by Google reCaptcha;
-* Sends emails through AWS.SES.
+* Sends emails through MailChimp
 
 ### Instagram feed
 
-Fetches data from Instagram feed and stores them to domain related bucket.
-
-* Used official Instagram API (api.instagram.com/v1);
-* Fetch latest 20 posts.
+Fetches data from Instagram feed (latest 20 posts) and stores them as json in `json/instagram-feed.json`
 
 ### Facebook Events
 
-Fetches Facebook events list and stores them as json.
+Fetches Facebook events list and stores them as json in `json/facebook-feed.json`
+
+### Medium Feed
+
+Fetches data from MediumFeed and stores them as json in `json/medium-feed.json` gets images and puts 
+them in `img/medium` folder
 
 ## Deployment
 
-### Pre-requisites
+### Prerequisites
 
-- Amazon Web Services (AWS) [account][1]
-- AWS Command Line Interface (CLI) [configured][2]
-
-### Prepare
-
-Make sure you have all requirements installed
-
-```bash
-cd bin/travis && npm install && cd ../../
-```
+- Amazon Web Services (AWS) [account][2]
+- AWS Command Line Interface (CLI) [configured][3]
 
 ### Build & deploy
 
 Run the deploy command:
 
 ```bash
-bash bin/deploy.sh <env> <region> <aws-profile>
+bash bin/deploy.sh <env> <aws-profile>
 ```
+> Ex. bash bin/deploy.sh dev saml
 
 Available `dev` and `master` environments for deploy.
 
+Run the deploy lambda command:
+
+```bash
+bash bin/test.sh <lambdaName> <aws-profile>
+```
+
+Available `facebook-events-404md`, ` medium-feed-404md` and
+ `instagram-feed-404md` lambdas for deploy
+
 >Defaults:
 >- `<env> => dev`
->- `<region> => eu-central-1`
 >- `<profile> => default`
 
-[1]: https://www.youtube.com/watch?v=WviHsoz8yHk
-[2]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+[1]: https://www.404.md
+[2]: https://www.youtube.com/watch?v=WviHsoz8yHk
+[3]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
